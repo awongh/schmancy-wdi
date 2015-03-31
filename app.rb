@@ -20,6 +20,12 @@ get '/' do
   send_file(settings.views + '/index.html')
 end
 
+get '/myfavorites' do
+  redirect '/login' unless env['warden'].user
+  @favorites = Favorite.where( user_id: env['warden'].user.id )
+  erb :favorites
+end
+
 get '/favorites' do
   status 403 unless env['warden'].user
   content_type :json

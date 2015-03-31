@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Shmancy Movies</title>
+  </head>
+  <body>
+    <div id="favorites">
+      <ul>
+      <% for @favorite in @favorites %>
+        <li><%= @favorite.id %></li>
+      <% end %>
+      </ul>
+    </div>
+  </body>
+</html>
