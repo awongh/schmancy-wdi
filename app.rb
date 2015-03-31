@@ -6,9 +6,10 @@ require 'digest/md5'
 require 'warden'
 #require 'rack/flash'
 
-require 'pry-byebug' if development?
-require "sinatra/reloader" if development?
-
+if development?
+  require 'pry-byebug'
+  require "sinatra/reloader"
+end
 
 set :root, File.dirname(__FILE__)
 set :views, Proc.new { File.join(root, "views") }
@@ -34,7 +35,7 @@ get '/favorites' do
   movie.to_json
 end
 
-class Post < ActiveRecord::Base
+class Favorite < ActiveRecord::Base
 end
 
 #auth stuff
