@@ -6,7 +6,7 @@ require 'digest/md5'
 require 'warden'
 #require 'rack/flash'
 
-require 'pry-byebug'
+require 'pry-byebug' if development?
 require "sinatra/reloader" if development?
 
 
