@@ -1,3 +1,13 @@
+#################################################
+###               Shmancy Movies              ###
+#################################################
+#################################################
+#################################################
+#################################################
+#################################################
+
+###           require some stuff             ####
+
 require 'sinatra'
 require 'sinatra/activerecord'
 require './environments'
@@ -7,18 +17,42 @@ require 'rack/contrib'
 require 'digest/md5'
 require 'warden'
 
+
+#################################################
+#################################################
+###           development require            ####
+
 if development?
   require 'pry-byebug'
   require "sinatra/reloader"
 end
 
+
+#################################################
+#################################################
+###      set our html/template file paths    ####
+
 set :root, File.dirname(__FILE__)
 set :views, Proc.new { File.join(root, "views") }
+
+
+#################################################
+#################################################
+#################################################
+###      basic set of routes                 ####
+
+
+
+### root
 
 get '/' do
   redirect '/login' unless env['warden'].user
   send_file(settings.views + '/index.html')
 end
+
+### page that displayes the user's favorites
+### Note: we should have done this in the same controller,
+### but it was quicker to make this way.
 
 get '/myfavorites' do
   redirect '/login' unless env['warden'].user
@@ -26,11 +60,17 @@ get '/myfavorites' do
   erb :favorites
 end
 
+### the favorites JSON controller-
+### get all the favorites for the logged in user
+
 get '/favorites' do
   status 403 unless env['warden'].user
   content_type :json
   Favorite.where( user_id: env['warden'].user.id ).to_json
 end
+
+### the favorites JSON Post controller
+### we create a new favorite here.
 
 post '/favorites' do
   status 403 unless env['warden'].user
@@ -42,6 +82,7 @@ post '/favorites' do
   request.body.rewind
   params = JSON.parse request.body.read
 
+  #make sure we aren't going to make a record that already exists
   if( Favorite.where( user_id: env['warden'].user.id, imdbid: params['imdbid'] ).empty? )
     Favorite.create(
       user_id: env['warden'].user.id,
@@ -51,6 +92,7 @@ post '/favorites' do
   end
 end
 
+### the active record class for the favorites
 class Favorite < ActiveRecord::Base
 end
 
@@ -88,7 +130,6 @@ Warden::Strategies.add(:password) do
   end
 end
 
-###
 class FailureApp
   def call(env)
     uri = env['REQUEST_URI']
@@ -118,7 +159,7 @@ post '/login/?' do
 end
 
 post '/signup/?' do
-  if( User.where( username: params['username'] ).emtpy? )
+  if( User.where( username: params['username'] ).empty? )
     User.create(
       username: params['username'],
       password: ::Digest::MD5.hexdigest(::Digest::MD5.hexdigest(params['password']))
