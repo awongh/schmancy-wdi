@@ -1,0 +1,8 @@
+development:
+  adapter: postgresql
+  database: shmancy
+  username: vagrant
+  password: pass
+  host: localhost
+  encoding: utf8
+  template: template0

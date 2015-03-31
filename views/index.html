@@ -6,12 +6,42 @@
     <title>Shmancy Movies</title>
   </head>
   <body>
-    <form>
+    <form id="search-box">
       <input type="text" />
-      <button type="submit">Submit</button>
+      <input id="search-submit" type="submit" disabled/>
     </form>
-    <ul>
+    <ul id="search-results">
     </ul>
   <script src="/js/app.js"></script>
+
+  <div id="hidden">
+    <li id="template-search-result" class="search-result">
+      <a class="result-link" href="#"></a>
+      <button class="favorite">favorite</button>
+    </li>
+    <div id="template-detail">
+      <ul>
+        <li class="actors">Actors: </li>
+        <li class="awards">Awards: </li>
+        <li class="country">Country: </li>
+        <li class="director">Director: </li>
+        <li class="genre">Genre: </li>
+        <li class="language">Language: </li>
+        <li class="metascore">Metascore: </li>
+        <li class="plot">Plot: </li>
+        <li class="poster"><img class="poster-img"/></li>
+        <li class="rated">Rated: </li>
+        <li class="released">Released: </li>
+        <li class="runtime">Runtime: </li>
+        <li class="title">Title: </li>
+        <li class="type">Type: "movie"</li>
+        <li class="writer">Writer: </li>
+        <li class="year">Year: </li>
+        <li class="imdbid">imdbID: </li>
+        <li class="imdbrating">imdbRating: </li>
+        <li class="imdbvotes">imdbVotes: </li>
+      <ul>
+    </div>
+  </div>
   </body>
 </html>

@@ -2,9 +2,10 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require './environments'
 
+require 'rack/contrib'
+
 require 'digest/md5'
 require 'warden'
-#require 'rack/flash'
 
 if development?
   require 'pry-byebug'
@@ -16,23 +17,31 @@ set :views, Proc.new { File.join(root, "views") }
 
 get '/' do
   redirect '/login' unless env['warden'].user
-  File.read(settings.views + '/index.html')
-end
-
-get 'favorites' do
-  response.header['Content-Type'] = 'application/json'
-  File.read('data.json')
+  send_file(settings.views + '/index.html')
 end
 
 get '/favorites' do
-  file = JSON.parse(File.read('data.json'))
-  unless params[:name] && params[:oid]
-    return 'Invalid Request'
+  status 403 unless env['warden'].user
+  content_type :json
+  Favorite.where( user_id: env['warden'].user.id ).to_json
+end
+
+post '/favorites' do
+  status 403 unless env['warden'].user
+
+  content_type :json
+
+  #this is some weird JS xhr request/rack thing.
+  #http://stackoverflow.com/questions/17049569/how-to-parse-json-request-body-in-sinatra-just-once-and-expose-it-to-all-routes
+  request.body.rewind
+  params = JSON.parse request.body.read
+
+  if( Favorite.where( user_id: env['warden'].user.id, imdbid: params['imdbid'] ).empty? )
+    Favorite.create(
+      user_id: env['warden'].user.id,
+      imdbid: params['imdbid']
+    )
   end
-  movie = { name: params[:name], oid: params[:oid] }
-  file << movie
-  File.write('data.json',JSON.pretty_generate(file))
-  movie.to_json
 end
 
 class Favorite < ActiveRecord::Base
@@ -88,6 +97,11 @@ get '/login/?' do
   end
 end
 
+get '/logout/?' do
+  env['warden'].logout
+  redirect '/login'
+end
+
 post '/login/?' do
   if env['warden'].authenticate
     redirect '/'
@@ -97,12 +111,15 @@ post '/login/?' do
 end
 
 post '/signup/?' do
+  if( User.where( username: params['username'] ).emtpy? )
+    User.create(
+      username: params['username'],
+      password: ::Digest::MD5.hexdigest(::Digest::MD5.hexdigest(params['password']))
+    )
+  end
 
-  User.create(
-    username: params['username'],
-    password: ::Digest::MD5.hexdigest(::Digest::MD5.hexdigest(params['password']))
-  )
-
+  #log them in
+  #silently log them in if they are trying to sign up, but exist
   if env['warden'].authenticate
     redirect '/'
   else

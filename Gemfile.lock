@@ -35,6 +35,8 @@ GEM
       byebug (~> 4.0)
       pry (~> 0.10)
     rack (1.6.0)
+    rack-contrib (1.2.0)
+      rack (>= 0.9.1)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -70,6 +72,7 @@ DEPENDENCIES
   activerecord
   pg
   pry-byebug
+  rack-contrib
   shotgun
   sinatra
   sinatra-activerecord

@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20150331163658) do
   enable_extension "plpgsql"
 
   create_table "favorites", force: :cascade do |t|
-    t.integer  "favorites"
+    t.string   "imdbid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"

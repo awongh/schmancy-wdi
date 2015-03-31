@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby "2.2.1"
 
 gem 'sinatra'
+gem 'rack-contrib'
 gem "activerecord"
 gem "sinatra-activerecord"
 gem 'pg'
