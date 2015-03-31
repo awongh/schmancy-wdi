@@ -28,8 +28,9 @@
 
   var set_favorite = function( el ){
     imdbid = el.parentElement.dataset.imdbid;
+    title = el.parentElement.dataset.title;
     el.parentElement.removeChild( el );
-    request_ajax('/favorites', 'post', {imdbid: imdbid},  function(response){
+    request_ajax('/favorites', 'post', {imdbid: imdbid, title:title},  function(response){
       if( response.currentTarget.status != 200 ){
         alert("couldn't save favorite.");
       }else{
@@ -141,6 +142,7 @@
 
         node.setAttribute('id', res[i].imdbID);
         node.setAttribute('data-imdbid', res[i].imdbID);
+        node.setAttribute('data-title', res[i].Title);
 
         if( !has_favorite( res[i].imdbID ) ){
           fav_btn = document.getElementById( 'template-favorite-btn' ).cloneNode(true);

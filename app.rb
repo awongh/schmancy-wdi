@@ -45,6 +45,7 @@ post '/favorites' do
   if( Favorite.where( user_id: env['warden'].user.id, imdbid: params['imdbid'] ).empty? )
     Favorite.create(
       user_id: env['warden'].user.id,
+      title: params['title'],
       imdbid: params['imdbid']
     )
   end

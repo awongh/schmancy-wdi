@@ -6,12 +6,15 @@
     <title>Shmancy Movies</title>
   </head>
   <body>
-    <form id="search-box">
-      <input type="search"/>
-      <input id="search-submit" type="submit" disabled/>
-    </form>
-    <ul id="search-results">
-    </ul>
+    <div id="main">
+      <h2>Shmancy Movies</h2>
+      <form id="search-box">
+        <input id="search" type="text"/>
+        <input id="search-submit" type="submit" disabled/>
+      </form>
+      <ul id="search-results">
+      </ul>
+    </div>
   <script src="/js/app.js"></script>
 
   <div id="hidden">
@@ -21,26 +24,26 @@
     </li>
     <button id="template-favorite-btn" class="favorite">favorite</button>
     <div id="template-detail">
-      <ul>
-        <li class="actors">Actors: </li>
-        <li class="awards">Awards: </li>
-        <li class="country">Country: </li>
-        <li class="director">Director: </li>
-        <li class="genre">Genre: </li>
-        <li class="language">Language: </li>
-        <li class="metascore">Metascore: </li>
-        <li class="plot">Plot: </li>
-        <li class="poster"><img class="poster-img"/></li>
-        <li class="rated">Rated: </li>
-        <li class="released">Released: </li>
-        <li class="runtime">Runtime: </li>
-        <li class="title">Title: </li>
-        <li class="type">Type: "movie"</li>
-        <li class="writer">Writer: </li>
-        <li class="year">Year: </li>
-        <li class="imdbid">imdbID: </li>
-        <li class="imdbrating">imdbRating: </li>
-        <li class="imdbvotes">imdbVotes: </li>
+      <ul class="detail-list">
+        <li class="poster"><span class="detail-label"><img class="poster-img"/></li>
+        <li class="actors"><span class="detail-label">Actors:</span> </li>
+        <li class="awards"><span class="detail-label">Awards:</span> </li>
+        <li class="country"><span class="detail-label">Country:</span> </li>
+        <li class="director"><span class="detail-label">Director:</span> </li>
+        <li class="genre"><span class="detail-label">Genre:</span> </li>
+        <li class="language"><span class="detail-label">Language:</span> </li>
+        <li class="metascore"><span class="detail-label">Metascore:</span> </li>
+        <li class="plot"><span class="detail-label">Plot:</span> </li>
+        <li class="rated"><span class="detail-label">Rated:</span> </li>
+        <li class="released"><span class="detail-label">Released:</span> </li>
+        <li class="runtime"><span class="detail-label">Runtime:</span> </li>
+        <li class="title"><span class="detail-label">Title:</span> </li>
+        <li class="type"><span class="detail-label">Type:</span> "movie"</li>
+        <li class="writer"><span class="detail-label">Writer:</span> </li>
+        <li class="year"><span class="detail-label">Year:</span> </li>
+        <li class="imdbid"><span class="detail-label">imdbID:</span> </li>
+        <li class="imdbrating"><span class="detail-label">imdbRating:</span> </li>
+        <li class="imdbvotes"><span class="detail-label">imdbVotes:</span> </li>
       <ul>
     </div>
   </div>

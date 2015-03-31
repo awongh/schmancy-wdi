@@ -1,7 +1,43 @@
+body{
+  background-color:#bababa;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+img{
+  margin:10px;
+}
+
+h2{
+  text-align:center;
+}
+
+#main{
+  width:800px;
+  margin:auto;
+}
+
 #hidden{
   display:none;
 }
 
 #search-results{
   list-style:none;
+}
+
+#search-box{
+  width:200px;
+  margin:auto;
+}
+.detail-list{
+  list-style:none;
+  font-style:italic;
+}
+.detail-label{
+  font-weight:bold;
+  font-style:normal;
+}
+.search-result{
+  background-color:#efefef;
+  padding:10px;
+  margin:10px;
 }
