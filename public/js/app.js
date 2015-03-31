@@ -6,6 +6,16 @@
     return Object.prototype.toString.call(x) == '[object Function]';
   }
 
+  var has_favorite = function( id ){
+    for( var i = 0; i < user_favorites.length; i++ ){
+      if( user_favorites[i]['imdbid'] == id ){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   var get_favorites = function( callback ){
     request_ajax('/favorites', 'get', "",  function(response){
       user_favorites = JSON.parse( this.response );
@@ -16,7 +26,9 @@
     });
   };
 
-  var set_favorite = function( imdbid ){
+  var set_favorite = function( el ){
+    imdbid = el.parentElement.dataset.imdbid;
+    el.parentElement.removeChild( el );
     request_ajax('/favorites', 'post', {imdbid: imdbid},  function(response){
       if( response.currentTarget.status != 200 ){
         alert("couldn't save favorite.");
@@ -33,8 +45,6 @@
 
     node.id = "";
 
-    var node_lis = node.children[0].children
-
     for(var key in res){
       if (res.hasOwnProperty(key)) {
 
@@ -48,7 +58,7 @@
       }
     }
 
-    document.getElementById(res.imdbID).appendChild(node);
+    document.getElementById(res.imdbID).querySelector('.detail-container').appendChild(node);
   };
 
   //we should use this normally, but here we are using JSON stringify b/c sinatra can't see what you send otherwise.
@@ -97,6 +107,21 @@
     request_omdb( "i", id, callback );
   };
 
+  var omdb_detail = function( el ){
+    if( el.parentElement.dataset.clicked == 'false' ){
+      el.parentElement.setAttribute( 'data-clicked', 'true' );
+      request_omdb_detail( el.parentElement.dataset.imdbid, render_detail );
+    }else if( el.parentElement.dataset.clicked == 'true' ){
+      if( el.parentElement.querySelector('.detail-container').style.display == "none" ){
+
+        el.parentElement.querySelector('.detail-container').style.display = "block";
+      }else{
+        el.parentElement.querySelector('.detail-container').style.display = "none";
+      }
+    }
+
+  };
+
   document.querySelector('form').addEventListener('submit', function(event){
     event.preventDefault();
 
@@ -117,15 +142,20 @@
         node.setAttribute('id', res[i].imdbID);
         node.setAttribute('data-imdbid', res[i].imdbID);
 
+        if( !has_favorite( res[i].imdbID ) ){
+          fav_btn = document.getElementById( 'template-favorite-btn' ).cloneNode(true);
+          node.appendChild( fav_btn );
+        }
+
+        node.addEventListener('click', function(event){
+          omdb_detail( event.target );
+        });
+
         document.getElementById('search-results').appendChild(node);
       }
 
-      document.querySelector('.search-result').addEventListener('click', function(event){
-        request_omdb_detail( event.target.parentElement.dataset.imdbid, render_detail );
-      });
-
       document.querySelector('.favorite').addEventListener('click', function(event){
-        set_favorite( event.target.parentElement.dataset.imdbid );
+        set_favorite( event.target );
       });
 
     });

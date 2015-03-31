@@ -7,7 +7,7 @@
   </head>
   <body>
     <form id="search-box">
-      <input type="text" />
+      <input type="search"/>
       <input id="search-submit" type="submit" disabled/>
     </form>
     <ul id="search-results">
@@ -15,10 +15,11 @@
   <script src="/js/app.js"></script>
 
   <div id="hidden">
-    <li id="template-search-result" class="search-result">
+    <li id="template-search-result" class="search-result" data-clicked="false">
       <a class="result-link" href="#"></a>
-      <button class="favorite">favorite</button>
+      <div class="detail-container"></div>
     </li>
+    <button id="template-favorite-btn" class="favorite">favorite</button>
     <div id="template-detail">
       <ul>
         <li class="actors">Actors: </li>
