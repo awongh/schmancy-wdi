@@ -164,6 +164,10 @@
 
   });
 
+  document.getElementById('clear-search').addEventListener('click', function(event){
+    document.getElementById('search-results').innerHTML = "";
+  });
+
   get_favorites( function(){
     document.getElementById("search-submit").removeAttribute('disabled');
   });

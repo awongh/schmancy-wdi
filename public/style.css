@@ -24,9 +24,12 @@ h2{
   list-style:none;
 }
 
-#search-box{
-  width:200px;
+#controls{
+  width:230px;
   margin:auto;
+}
+#search-box{
+  display:inline;
 }
 .detail-list{
   list-style:none;
