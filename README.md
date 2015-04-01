@@ -1,3 +1,3 @@
 # schmancy-wdi
 
-https://schmancy-wdi.herokuapp.com/
+http://schmancy-wdi.herokuapp.com/
