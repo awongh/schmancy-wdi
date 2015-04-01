@@ -44,3 +44,17 @@ h2{
   padding:10px;
   margin:10px;
 }
+
+#favorites-link{
+  width:65px;
+  display:block;
+  margin: 7px auto 7px auto;
+}
+
+/* login page */
+.form-control{
+  background-color:#efefef;
+  margin:20px;
+  padding:20px;
+  display:inline-block;
+}
